@@ -1,4 +1,4 @@
-import { type CharacterData } from "../type";
+import { type CharacterData } from "../../type";
 
 interface CharacterCardProps {
   character: CharacterData;
@@ -12,7 +12,7 @@ const CharacterCard = ({ character }: CharacterCardProps) => {
         src={character.url}
         alt={character.name}
       />
-      <h1 className="character__name"> {character.name} </h1>
+      <h2 className="character__name"> {character.name} </h2>
       <span className="character__height"> {character.height}</span>
       <span className="character__mass">{character.mass}</span>
       <span className="character__creation-date"> {character.created}</span>

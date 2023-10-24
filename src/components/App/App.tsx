@@ -1,3 +1,5 @@
+import "./App.css";
+
 import { type CharacterData } from "../../type";
 import CharacterCard from "../CharacterCard/CharacterCard";
 import { useState, useEffect } from "react";
