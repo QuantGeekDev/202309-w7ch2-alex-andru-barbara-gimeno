@@ -1,4 +1,3 @@
-import CharacterCard from "../Character/Character";
 import "./App.css";
 
 import { type CharacterData } from "../../type";
