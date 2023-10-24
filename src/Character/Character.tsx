@@ -1,4 +1,3 @@
-import "./Character.scss";
 import { type CharacterData } from "../type";
 
 interface CharacterCardProps {
