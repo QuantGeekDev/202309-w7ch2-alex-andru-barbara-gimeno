@@ -1,20 +1,58 @@
 import CharacterCard from "../Character/Character";
 import "./App.css";
 
+import { type CharacterData } from "../../type";
+import CharacterCard from "../CharacterCard/CharacterCard";
+import { useState, useEffect } from "react";
+
+const getCharacters = async (quantity: number) => {
+  const charactersList: CharacterData[] = [];
+  for (
+    let characterCount = 1;
+    characterCount < quantity + 1;
+    characterCount++
+  ) {
+    const characterUrl = `https://swapi.dev/api/people/${characterCount}`;
+    const response = await fetch(characterUrl);
+    const characterApi = (await response.json()) as CharacterData;
+    characterApi.id = characterCount;
+    characterApi.avatarUrl = `https://starwars-visualguide.com/assets/img/characters/${characterCount}.jpg`;
+    charactersList.push(characterApi);
+  }
+  return charactersList;
+};
+const luke: CharacterData = {
+  avatarUrl: "",
+  created: "",
+  height: "",
+  id: 0,
+  mass: "",
+  name: "",
+  url: "",
+};
+
 const App = (): React.ReactElement => {
-  const luke = {
-    id: 1,
-    name: "Luke Skywalker",
-    height: "172",
-    mass: "77",
-    created: "2014-12-09T13:50:51.644000Z",
-    url: "https://starwars-visualguide.com/assets/img/characters/1.jpg",
-  };
+  const [characters, setCharacters] = useState<CharacterData[]>([luke]);
+
+  useEffect(() => {
+    const loadApi = async () => {
+      const characters = await getCharacters(30);
+      setCharacters(characters);
+    };
+    loadApi();
+  }, [characters]);
+
   return (
     <div className="app">
-      <h1 className="main__title"> Star Wars Characters</h1>
-      <img className="logo" src="logo-star-wars.jpg" alt="" />
-      <CharacterCard character={luke} />
+      <ul>
+        {characters.map((character) => {
+          return (
+            <li>
+              <CharacterCard character={character} />
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
