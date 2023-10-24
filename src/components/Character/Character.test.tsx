@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import CharacterCard from "./Character";
-import { type CharacterData } from "../type";
+import { type CharacterData } from "../../type";
 describe("Given a Character component", () => {
   describe("When it receives the Luke's data", () => {
     test("Then it should show the Luke inside a heading", () => {
