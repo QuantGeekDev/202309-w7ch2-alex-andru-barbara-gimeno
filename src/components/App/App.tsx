@@ -1,10 +1,9 @@
 import "./App.css";
 import { type StarWarsApiResponse } from "../../type";
 
-
 import { type CharacterData } from "../../type";
 import { useState, useEffect } from "react";
-import CharacterCard from "../Character/Character";
+import CharacterCard from "../CharacterCard/CharacterCard";
 
 const getCharacterIdFromUrl = (url: string) => {
   const urlComponents = url.split("/");
