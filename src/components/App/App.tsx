@@ -1,26 +1,15 @@
 import "./App.css";
-import { type StarWarsApiResponse } from "../../type";
 import CharacterCard from "../Character/Character";
 import { type CharacterData } from "../../type";
 import { useState, useEffect } from "react";
 
-const getCharacterIdFromUrl = (url: string) => {
-  const urlComponents = url.split("/");
-  const lastPosition = urlComponents.length - 2;
-  const characterId = urlComponents[lastPosition];
-
-  return characterId;
-};
-
 const getAllCharacters = async (): Promise<CharacterData[]> => {
   const apiUrl = "https://starwars-characters-api-qcun.onrender.com/characters";
   const response = await fetch(apiUrl);
-  const characterApi = (await response.json()) as StarWarsApiResponse;
-  const characters: CharacterData[] = characterApi.results;
+  const characterApi = (await response.json()) as CharacterData[];
+  const characters: CharacterData[] = characterApi;
   for (const character of characters) {
-    const characterId = parseInt(getCharacterIdFromUrl(character.url));
-    character.id = characterId;
-    character.avatarUrl = `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`;
+    character.avatarUrl = `https://starwars-visualguide.com/assets/img/characters/${character.id}.jpg`;
   }
   return characters;
 };
