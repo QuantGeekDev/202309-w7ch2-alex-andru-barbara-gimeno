@@ -5,11 +5,25 @@ import { type CharacterData } from "../../type";
 import CharacterCard from "../CharacterCard/CharacterCard";
 import { useState, useEffect } from "react";
 
+const getCharacterIdFromUrl = (url: string) => {
+  const urlComponents = url.split("/");
+  const lastPosition = urlComponents.length - 2;
+  const characterId = urlComponents[lastPosition];
+
+  return characterId;
+};
+
 const getAllCharacters = async (): Promise<CharacterData[]> => {
   const apiUrl = "https://swapi.dev/api/people";
   const response = await fetch(apiUrl);
   const characterApi = (await response.json()) as StarWarsApiResponse;
-  return characterApi.results;
+  const characters: CharacterData[] = characterApi.results;
+  for (const character of characters) {
+    const characterId = parseInt(getCharacterIdFromUrl(character.url));
+    character.id = characterId;
+    character.avatarUrl = `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`;
+  }
+  return characters;
 };
 
 const App = (): React.ReactElement => {
@@ -18,12 +32,11 @@ const App = (): React.ReactElement => {
   useEffect(() => {
     const loadApi = async () => {
       const apiCharacters = await getAllCharacters();
-      console.log(await apiCharacters);
       setCharacters(apiCharacters);
     };
 
     loadApi();
-  }, [characters]);
+  }, []);
 
   return (
     <div className="app">
@@ -39,4 +52,5 @@ const App = (): React.ReactElement => {
     </div>
   );
 };
+
 export default App;
