@@ -2,7 +2,6 @@ import "./App.css";
 import { type StarWarsApiResponse } from "../../type";
 
 import { type CharacterData } from "../../type";
-import CharacterCard from "../CharacterCard/CharacterCard";
 import { useState, useEffect } from "react";
 
 const getCharacterIdFromUrl = (url: string) => {
