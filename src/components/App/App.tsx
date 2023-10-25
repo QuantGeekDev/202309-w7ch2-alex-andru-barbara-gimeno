@@ -1,5 +1,6 @@
 import "./App.css";
 import { type StarWarsApiResponse } from "../../type";
+import Button from "../Button/Button";
 
 import { type CharacterData } from "../../type";
 import { useState, useEffect } from "react";
@@ -28,6 +29,7 @@ const getAllCharacters = async (): Promise<CharacterData[]> => {
 
 const App = (): React.ReactElement => {
   const [characters, setCharacters] = useState<CharacterData[]>([]);
+   const [number, setNumber] = useState(0);
 
   useEffect(() => {
     const loadApi = async () => {
@@ -37,6 +39,20 @@ const App = (): React.ReactElement => {
 
     loadApi();
   }, []);
+   const increase = () => {
+    if (number >= 10) {
+      return;
+    }
+
+    setNumber((number) => number + 1);
+  };
+
+  const decrease = () => {
+    if (number <= 0) {
+      return;
+    }
+
+    setNumber((number) => number - 1);
 
   return (
     <div className="app">
@@ -50,6 +66,11 @@ const App = (): React.ReactElement => {
         })}
       </ul>
     </div>
+    <did className="button">
+      <Button symbol="-" actionOnClick={decrease} />
+      <Input number={number} />
+      <Button symbol="+" actionOnClick={increase} />
+    </did>
   );
 };
 
