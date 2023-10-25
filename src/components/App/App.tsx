@@ -1,51 +1,48 @@
 import "./App.css";
+import { type StarWarsApiResponse } from "../../type";
 
 import { type CharacterData } from "../../type";
 import { useState, useEffect } from "react";
 
-const getCharacters = async (quantity: number) => {
-  const charactersList: CharacterData[] = [];
-  for (
-    let characterCount = 1;
-    characterCount < quantity + 1;
-    characterCount++
-  ) {
-    const characterUrl = `https://swapi.dev/api/people/${characterCount}`;
-    const response = await fetch(characterUrl);
-    const characterApi = (await response.json()) as CharacterData;
-    characterApi.id = characterCount;
-    characterApi.avatarUrl = `https://starwars-visualguide.com/assets/img/characters/${characterCount}.jpg`;
-    charactersList.push(characterApi);
-  }
-  return charactersList;
+const getCharacterIdFromUrl = (url: string) => {
+  const urlComponents = url.split("/");
+  const lastPosition = urlComponents.length - 2;
+  const characterId = urlComponents[lastPosition];
+
+  return characterId;
 };
-const luke: CharacterData = {
-  avatarUrl: "",
-  created: "",
-  height: "",
-  id: 0,
-  mass: "",
-  name: "",
-  url: "",
+
+const getAllCharacters = async (): Promise<CharacterData[]> => {
+  const apiUrl = "https://swapi.dev/api/people";
+  const response = await fetch(apiUrl);
+  const characterApi = (await response.json()) as StarWarsApiResponse;
+  const characters: CharacterData[] = characterApi.results;
+  for (const character of characters) {
+    const characterId = parseInt(getCharacterIdFromUrl(character.url));
+    character.id = characterId;
+    character.avatarUrl = `https://starwars-visualguide.com/assets/img/characters/${characterId}.jpg`;
+  }
+  return characters;
 };
 
 const App = (): React.ReactElement => {
-  const [characters, setCharacters] = useState<CharacterData[]>([luke]);
+  const [characters, setCharacters] = useState<CharacterData[]>([]);
 
   useEffect(() => {
     const loadApi = async () => {
-      const characters = await getCharacters(30);
-      setCharacters(characters);
+      const apiCharacters = await getAllCharacters();
+      setCharacters(apiCharacters);
     };
+
     loadApi();
-  }, [characters]);
+  }, []);
 
   return (
     <div className="app">
       <ul>
         {characters.map((character) => {
           return (
-            <li>
+            <li key={character.name}>
               <CharacterCard character={character} />
             </li>
           );
@@ -54,4 +51,5 @@ const App = (): React.ReactElement => {
     </div>
   );
 };
+
 export default App;

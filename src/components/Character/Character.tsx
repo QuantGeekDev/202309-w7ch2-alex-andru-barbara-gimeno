@@ -4,18 +4,16 @@ interface CharacterCardProps {
   character: CharacterData;
 }
 
-const CharacterCard = ({ character }: CharacterCardProps) => {
+const CharacterCard = ({
+  character: { name, url, height, mass, created },
+}: CharacterCardProps) => {
   return (
-    <article className={`character ${character.name}`}>
-      <img
-        className="character__avatar"
-        src={character.url}
-        alt={character.name}
-      />
-      <h2 className="character__name"> {character.name} </h2>
-      <span className="character__height"> {character.height}</span>
-      <span className="character__mass">{character.mass}</span>
-      <span className="character__creation-date"> {character.created}</span>
+    <article className={`character ${name}`}>
+      <img className="character__avatar" src={url} alt={name} />
+      <h2 className="character__name"> {name} </h2>
+      <span className="character__height"> {height}</span>
+      <span className="character__mass">{mass}</span>
+      <span className="character__creation-date"> {created}</span>
     </article>
   );
 };

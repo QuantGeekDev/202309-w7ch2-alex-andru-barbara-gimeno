@@ -7,3 +7,10 @@ export interface CharacterData {
   created: string;
   url: string;
 }
+
+export interface StarWarsApiResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: CharacterData[];
+}
