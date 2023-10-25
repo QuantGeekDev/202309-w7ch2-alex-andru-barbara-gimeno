@@ -1,7 +1,7 @@
 import "./App.css";
-
 import { type CharacterData } from "../../type";
 import { useState, useEffect } from "react";
+import CharacterCard from "../Character/Character";
 
 const getCharacters = async (quantity: number) => {
   const charactersList: CharacterData[] = [];
