@@ -1,6 +1,7 @@
 import "./App.css";
 import { type StarWarsApiResponse } from "../../type";
 import Button from "../Button/Button";
+import Input from "../Input/Input";
 
 import { type CharacterData } from "../../type";
 import { useState, useEffect } from "react";
@@ -55,22 +56,24 @@ const App = (): React.ReactElement => {
     setNumber((number) => number - 1);
 
   return (
-    <div className="app">
-      <ul>
-        {characters.map((character) => {
-          return (
-            <li key={character.name}>
-              <CharacterCard character={character} />
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-    <did className="button">
-      <Button symbol="-" actionOnClick={decrease} />
-      <Input number={number} />
-      <Button symbol="+" actionOnClick={increase} />
-    </did>
+
+  <div className="app">
+    <ul>
+      {characters.map((character) => (
+      <li key={character.name}>
+        <CharacterCard character={character} />
+
+      </li> 
+    ))}
+    </ul>
+
+   <div className="button">
+    <Button button symbol="-" actionOnClick={decrease} />
+    <Input number={number} />
+    <Button symbol="+" actionOnClick={increase} />
+   </div>
+  </div>
+        
   );
 };
 
