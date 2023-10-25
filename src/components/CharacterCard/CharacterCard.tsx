@@ -5,11 +5,11 @@ interface CharacterCardProps {
 }
 
 const CharacterCard = ({
-  character: { name, url, height, mass, created },
+  character: { name, avatarUrl, height, mass, created },
 }: CharacterCardProps) => {
   return (
     <article className={`character ${name}`}>
-      <img className="character__avatar" src={url} alt={name} />
+      <img className="character__avatar" src={avatarUrl} alt={name} />
       <h2 className="character__name"> {name} </h2>
       <span className="character__height"> {height}</span>
       <span className="character__mass">{mass}</span>
