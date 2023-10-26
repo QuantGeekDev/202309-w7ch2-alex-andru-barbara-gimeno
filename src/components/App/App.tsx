@@ -42,6 +42,25 @@ const App = (): React.ReactElement => {
     loadApi();
   };
 
+  const decreaseMass = async (characterId: number) => {
+    const character = await getCharacter(characterId);
+
+    const apiUrl = `https://starwars-characters-api-qcun.onrender.com/characters/${characterId}`;
+    const characterMass = character.mass;
+    const newCharacterMass = parseInt(characterMass) - 1;
+    const response = await fetch(apiUrl, {
+      method: "PATCH",
+      headers: {
+        Accept: "appliction/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ mass: newCharacterMass }),
+    });
+    console.log(await response);
+
+    loadApi();
+  };
+
   const loadApi = async () => {
     const apiCharacters = await getAllCharacters();
     setCharacters(apiCharacters);
@@ -60,6 +79,7 @@ const App = (): React.ReactElement => {
               <CharacterCard
                 character={character}
                 increaseMass={increaseMass}
+                decreaseMass={decreaseMass}
               />
             </li>
           );

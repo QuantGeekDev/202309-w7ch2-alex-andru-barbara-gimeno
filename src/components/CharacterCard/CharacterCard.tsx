@@ -4,11 +4,13 @@ import Button from "../Button/Button";
 interface CharacterCardProps {
   character: CharacterData;
   increaseMass: (characterId: number) => void;
+  decreaseMass: (characterId: number) => void;
 }
 
 const CharacterCard = ({
   character: { id, name, avatarUrl, height, mass, created },
   increaseMass,
+  decreaseMass,
 }: CharacterCardProps) => {
   return (
     <article className={`character ${name}`}>
@@ -26,7 +28,7 @@ const CharacterCard = ({
       />
       <Button
         actionOnClick={() => {
-          increaseMass(id);
+          decreaseMass(id);
         }}
         text="Decrease Mass"
         symbol="-"
