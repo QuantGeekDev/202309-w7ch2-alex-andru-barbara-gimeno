@@ -14,7 +14,7 @@ describe("Given a Character component", () => {
         url: "https://swapi.dev/api/people/1/",
       };
 
-      render(<CharacterCard character={luke} />);
+      render(<CharacterCard character={luke} increaseMass={() => {}} />);
 
       const characterName = screen.getByRole("heading", {
         name: luke.name,
@@ -36,7 +36,7 @@ describe("Given a Character component", () => {
         url: "https://swapi.dev/api/people/1/",
       };
 
-      render(<CharacterCard character={luke} />);
+      render(<CharacterCard character={luke} increaseMass={() => {}} />);
 
       const characterName = screen.getByRole("heading", {
         name: luke.name,

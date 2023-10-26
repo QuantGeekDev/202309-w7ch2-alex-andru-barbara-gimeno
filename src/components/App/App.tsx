@@ -16,7 +16,7 @@ const App = (): React.ReactElement => {
     return characters;
   };
 
-  const getCharacter = async (characterId: string): Promise<CharacterData> => {
+  const getCharacter = async (characterId: number): Promise<CharacterData> => {
     const apiUrl = `https://starwars-characters-api-qcun.onrender.com/characters/${characterId}`;
     const request = await fetch(apiUrl);
     const character = (await request.json()) as CharacterData;
@@ -25,21 +25,21 @@ const App = (): React.ReactElement => {
 
   const [characters, setCharacters] = useState<CharacterData[]>([]);
 
-  const increaseMass = (characterId: number) => {
-    async () => {
-      const character = await getCharacter(characterId.toString());
-      character.mass + 1;
-      console.log("hi");
-      const apiUrl = `https://starwars-characters-api-qcun.onrender.com/characters/${character.id}`;
-      const request = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(character),
-      });
-      console.log(request);
+  const increaseMass = async (characterId: number) => {
+    const character = await getCharacter(characterId);
 
-      loadApi();
-    };
+    const apiUrl = `https://starwars-characters-api-qcun.onrender.com/characters/${characterId}`;
+    const response = await fetch(apiUrl, {
+      method: "PATCH",
+      headers: {
+        Accept: "appliction/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ mass: character.mass + 1 }),
+    });
+    console.log(await response);
+
+    loadApi();
   };
 
   const loadApi = async () => {
@@ -49,14 +49,14 @@ const App = (): React.ReactElement => {
 
   useEffect(() => {
     loadApi();
-  }, [loadApi]);
+  }, []);
 
   return (
     <div className="app">
       <ul>
         {characters.map((character) => {
           return (
-            <li key={character.name}>
+            <li key={character.id}>
               <CharacterCard
                 character={character}
                 increaseMass={increaseMass}
